@@ -94,20 +94,7 @@ pub fn app() -> Element {
         spawn(crate::utils::legacy_migration::offer_to_trash_mechvibesdx_app());
     });
 
-    // Check for updates on startup (from completely closed state)
-    use_effect(move || {
-        spawn(async move {
-            if
-                let Ok(update_info) =
-                    crate::utils::auto_updater::check_for_updates_on_startup().await
-            {
-                debug_print!("🔄 Startup update check completed");
-                if update_info.update_available {
-                    debug_print!("🆕 Update available on startup: {}", update_info.latest_version);
-                }
-            }
-        });
-    });
+    // Startup update check removed: no network on launch. Use Settings > Check for updates.
 
     // ===== WINDOW FOCUS TRACKING =====
     // Lets the rdev (unfocused) / device_query (focused) hybrid listeners
@@ -252,18 +239,8 @@ pub fn app() -> Element {
                 delay::Delay::key_event().await;
             }
         });
-    } // Initialize update service for background update checking
-    #[cfg(feature = "auto-update")]
-    {
-        use crate::utils::auto_updater::UpdateService;
-        use_future(move || async move {
-            // No config is handed over: the service reads what it needs per
-            // tick and writes only its own fields. It used to be given an
-            // `Arc<Mutex<AppConfig>>` snapshotted here at launch, which it then
-            // saved back over every setting changed since.
-            UpdateService::new().start().await;
-        });
-    } // Set up asset handler for serving soundpack images
+    } // Background update poller removed: no automatic network calls.
+    // Set up asset handler for serving soundpack images
     use_asset_handler("soundpack-images", |request, response| {
         let request_path = request.uri().path();
 

@@ -34,7 +34,7 @@ All links point to the [latest release](https://github.com/hainguyents13/mechvib
 - **Pick your speakers**: switch the output device (headphones, speakers, virtual devices) in Settings without restarting.
 - **Mood**: 10 ambient sounds (rain, forest, ocean waves, coffee shop and more) to mix in, each with its own volume, plus your own music or sound files on repeat.
 - **Themes and customization**: start from four ready-made themes or 36 built-in colors, or make your own with a custom logo and background. Every theme you make or install stays in a gallery, so you can switch between them with one click, and your changes save on their own. Share your whole look with a friend as one file. On Windows and Linux they open it with a double-click.
-- **Verified updates**: on Windows, click **Update now** and Mechvibes downloads, checks and installs the new version. On macOS and Linux the app tells you when an update is out and links to the download page.
+- **Verified updates**: updates are checked only when you click **Check for updates** in Settings.
 - **Your settings stay put**: they are saved in `%APPDATA%\Mechvibes` (Windows), `~/.local/share/mechvibes` (Linux) or `~/Library/Application Support/Mechvibes` (macOS), so they survive restarts, updates and reinstalls. Uninstalling on Windows keeps them unless you choose to delete them.
 - **Logs for bug reports**: Settings > Debug shows a live log, with an **Export logs** button for attaching to an issue.
 
@@ -125,24 +125,11 @@ Packs made for the original Mechvibes (V1) are converted automatically when they
 
 ## Privacy and telemetry
 
-Mechvibes sends one anonymous ping per launch to track rough usage.
+This fork has **no telemetry** and makes **no automatic network calls**: the launch ping, the startup update check and the daily background update poller are removed.
 
-**What is sent (once per launch):**
-- OS name and version
-- App version
-- Your system language (locale)
+The app only goes online when you ask it to: **Check for updates** in Settings, installing a sound pack from the library, or opening a link.
 
-**What is never sent:**
-- Keystrokes, mouse clicks, or any input data
-- Sound pack names or usage
-- File paths or personal data
-- IP-derived identity or persistent identifiers
-
-The ping goes to [mechvibes.com](https://mechvibes.com), which only adds it to a daily count by OS, app version, language and country (worked out from your connection and not stored). Your IP address is not kept. **Opt out** anytime in Settings > Privacy > "Share anonymous usage stats".
-
-Mechvibes also checks GitHub for a new version once a day. That check sends nothing about you.
-
-Logs stay on your device until you click **Export logs** in Settings > Debug. The keys you press are never written to the log (they show as `***`), and your user name in file paths is replaced with `[username]` in the export.
+Logs stay on your device until you click **Export logs** in Settings > Debug. The keys you press are never written to the log (they show as `***`).
 
 ## Building from source
 
