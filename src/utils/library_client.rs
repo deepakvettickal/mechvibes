@@ -77,7 +77,15 @@ struct ThemeResponse {
     theme: LibraryTheme,
 }
 
+/// Offline build: every library request and remote image download goes
+/// through here, so refusing to build a client cuts them all off.
+/// No network access in this fork.
+const OFFLINE: bool = true;
+
 pub(crate) fn client() -> Result<reqwest::Client, String> {
+    if OFFLINE {
+        return Err("This build of Mechvibes is offline. Add sound packs and themes from files instead.".to_string());
+    }
     reqwest::Client
         ::builder()
         .user_agent(format!("{}/{}", APP_NAME, APP_VERSION))

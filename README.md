@@ -125,9 +125,14 @@ Packs made for the original Mechvibes (V1) are converted automatically when they
 
 ## Privacy and telemetry
 
-This fork has **no telemetry** and makes **no automatic network calls**: the launch ping, the startup update check and the daily background update poller are removed.
+This fork is **fully offline**. It never connects to the internet:
 
-The app only goes online when you ask it to: **Check for updates** in Settings, installing a sound pack from the library, or opening a link.
+- No telemetry (launch ping removed).
+- No update checks or update downloads, automatic or manual.
+- No sound pack or theme library downloads; add packs and themes from ZIP/files instead.
+- Themes pointing at `https://` images are ignored; only local images load.
+
+External links in the UI still open in your own browser if you click them; the app itself makes no requests.
 
 Logs stay on your device until you click **Export logs** in Settings > Debug. The keys you press are never written to the log (they show as `***`).
 

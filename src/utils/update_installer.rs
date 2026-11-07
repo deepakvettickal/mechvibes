@@ -16,6 +16,8 @@
 //! that existed before this module - the app must never be blocked by its own
 //! updater.
 
+/// No network access in this fork.
+const OFFLINE: bool = true;
 use serde::{ Deserialize, Serialize };
 use std::fmt;
 use std::path::{ Path, PathBuf };
@@ -244,6 +246,10 @@ pub async fn download_and_verify(
         StageError::Io(format!("Cannot create {}: {}", dir.display(), e))
     )?;
 
+    // Offline build: never download updates.
+    if OFFLINE {
+        return Err(StageError::Download("Updates are disabled in this offline build".to_string()));
+    }
     let client = reqwest::Client::new();
 
     // Fetch the checksums first. Without them nothing gets executed, so

@@ -9,6 +9,8 @@ use crate::utils::update_installer::{
     StagedUpdate,
 };
 use chrono::{ DateTime, Utc };
+/// No network access in this fork.
+const OFFLINE: bool = true;
 use reqwest;
 use semver::Version;
 use serde::{ Deserialize, Serialize };
@@ -175,6 +177,10 @@ impl AutoUpdater {
         }
     }
     pub async fn check_for_updates(&self) -> Result<UpdateInfo, UpdateError> {
+        // Offline build: never contact GitHub.
+        if OFFLINE {
+            return Err(UpdateError::NetworkError("Update checks are disabled in this offline build".to_string()));
+        }
         let url = format!("https://api.github.com/repos/{}/{}/releases", REPO_OWNER, REPO_NAME);
 
         let client = reqwest::Client::new();

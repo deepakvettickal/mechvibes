@@ -417,7 +417,8 @@ fn image_fits(image: Option<&str>, app_images_only: bool) -> bool {
     if let Some(file_name) = image.strip_prefix("/custom-images/") {
         return is_app_image_name(file_name);
     }
-    !app_images_only && (image.starts_with("https://") || Path::new(image).is_absolute())
+    // Offline build: remote (https) images are never loaded by the webview.
+    !app_images_only && Path::new(image).is_absolute()
 }
 
 /// A name this app gives an image it keeps: letters, digits, `-` and `_`,
@@ -861,7 +862,7 @@ mod tests {
         );
 
         let store = SavedThemes::load_from(&path);
-        assert_eq!(ids(&store), ["app", "web-mine", "path-mine"]);
+        assert_eq!(ids(&store), ["app", "path-mine"]); // offline: https images dropped
         let _ = std::fs::remove_dir_all(&dir);
     }
 
